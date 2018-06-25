@@ -24,7 +24,7 @@ var server = http.createServer(function(req, res) {
   var {callback, resData} = fetchQuery(req.url);
   console.log(callback, resData);
   res.writeHead(200, {'Content-type': 'text/plain; charset=utf-8'});
-  //服务端返回值必须是callback(obj)的形式
+  //服务端一般返回callback(obj)的形式
   res.end(callback + '(' + JSON.stringify(resData) + ')');
 })
 
