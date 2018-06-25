@@ -15,13 +15,11 @@ CORS(跨域资源共享)是的原理是浏览器在发送ajax请求的时候，�
 ## 2.JSONP
 由于在script、img标签的src属性不会受到浏览器同源策略的影响，也就是说无论当前所在地址是多少，也可以访问src所指向的内容，因此可以通过script标签实现跨域，这就是JSONP的原理。而通过img实现跨域的方案就是图像ping技术，后面我也会提到。
 
-一般JSONP的请求是这样的：http://localhost:3003?callback=myCallback&firstname=AlbertBert&lastname=allen
+一般JSONP的请求是这样的：http://localhost:3003?callback=myCallback&firstname=AlbertBert&lastname=allen 
 
-?后面的参数callback=myCallback&firstname=AlbertBert&lastname=allen是本次请求的信息，其中callback表示此次请求的回调函数，也就是请求结束的时候会执行，这是我们事先在前端定义的，firstname=AlbertBert&lastname=allen是此次请求的相关数据。
+其中callback表示此次请求的回调函数，也就是请求结束的时候会执行，这是我们事先在前端定义的，firstname=AlbertBert&lastname=allen是此次请求的相关数据。
 
-需要注意的是，JSONP也需要服务端做相应处理
-
-服务端在接收到此次的请求后，会做以下处理
+需要注意的是，JSONP也需要服务端做以下处理
 * 解析url从而获取回调函数cb以及相应数据，注意，数据必须是JSON字符串
 * 服务端以javascript语法的方式，生成一段执行该回调函数的代码，参数就是上一步生成的JSON字符串，返回给浏览器
 * 浏览器解析script标签，并执行返回的javascript代码，从而实现了跨域
