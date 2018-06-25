@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn-Hans">
+<head>
+  <meta charset="utf-8">
+  <title>CORS跨域演示</title>
+</head>
+<body>
+  <p>我是http://localhost:3000所在的页面</p>
+  <div>
+    <input id="btn" type="button" value="点我请求localhost:3001端口">
+  </div>
+  <h2 id="content"></h2>
+  <script>
+    //3000和3001虽然域名都相同但是端口不同，因此点击按钮会产生跨域问题
+    var btn = document.getElementById('btn');
+    btn.onclick = function(e) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          document.getElementById('content').innerHTML = xhr.responseText;
+        }
+      }
+      xhr.open('get', 'http://localhost:3001', true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>
