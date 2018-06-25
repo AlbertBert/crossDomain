@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn-Hans">
+<head>
+  <meta charset="utf-8">
+  <title>图像PING跨域演示</title>
+</head>
+<body>
+  <p>我是http://localhost:3004所在的页面</p>
+  <div>
+    <input id="btn" type="button" value="点我请求localhost:3005端口">
+  </div>
+  <h2 id="content"></h2>
+  <script>
+    //3004和3005虽然域名都相同但是端口不同，因此点击按钮会产生跨域问题
+    var btn = document.getElementById('btn');
+    var iCount = 0;
+    btn.onclick = function(e) {
+      var image = new Image();
+      // 这里把onload和onerror都设成一个函数，是因为服务端返回的是字符串，而不是图像
+      // 因此总会一直触发error事件，如果返回图像，则会触发load事件。但不管是error还是
+      // load都表示图像装载结束，跨域成功
+      image.onload = image.onerror = function() {
+        iCount += 1;
+        document.getElementById('content').innerHTML = iCount + '次';
+      }
+      // 加上时间戳是为了避免浏览器缓存导致的不发送请求
+      image.src = 'http://localhost:3005?timestamp=' + new Date().getTime();
+    }
+  </script>
+</body>
+</html>
