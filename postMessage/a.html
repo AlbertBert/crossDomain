@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-cn-Hans">
+<head>
+  <meta charset="utf-8">
+  <title>postMessage跨域演示</title>
+</head>
+<body>
+  <p>我是http://localhost:3009所在的页面</p>
+  <script>
+    // 监听有没有数据发送过来
+    window.addEventListener('message', function(e){
+      // 判断数据发送方是否是可靠的地址
+      if(e.origin !== 'http://localhost:3008')
+        return;
+      // 打印数据格式
+      console.log(e);
+      // 回发数据
+      e.source.postMessage('hello world', e.origin);
+    }, false);
+  </script>
+</body>
+</html>
