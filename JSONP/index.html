@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn-Hans">
+<head>
+  <meta charset="utf-8">
+  <title>JSONP跨域演示</title>
+</head>
+<body>
+  <p>我是http://localhost:3002所在的页面</p>
+  <div>
+    <input id="btn" type="button" value="点我请求localhost:3001端口">
+  </div>
+  <h2 id="content"></h2>
+  <script>
+    //3002和3003虽然域名都相同但是端口不同，因此点击按钮会产生跨域问题
+    var btn = document.getElementById('btn');
+    //定义相应的回调函数
+    function myCallback(res) {
+      console.log(res);
+      document.getElementById('content').innerHTML = 'Hello,' + res.firstname + ' ' + res.lastname;
+    }
+    btn.onclick = function(e) {
+      var script = document.createElement('script');
+      script.src = 'http://localhost:3003?callback=myCallback&firstname=AlbertBert&lastname=allen';
+      document.body.insertBefore(script, document.body.firstChild);
+    }
+  </script>
+</body>
+</html>
